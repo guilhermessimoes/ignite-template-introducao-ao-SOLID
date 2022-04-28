@@ -9,7 +9,13 @@ class TurnUserAdminUseCase {
     constructor(private usersRepository: IUsersRepository) {}
 
     execute({ user_id }: IRequest): User {
-        return usersAlreadyExists;
+        const user = this.usersRepository.findById(user_id);
+
+        if (!user) {
+            throw Error("User not exists!");
+        }
+
+        return this.usersRepository.turnAdmin(user);
     }
 }
 

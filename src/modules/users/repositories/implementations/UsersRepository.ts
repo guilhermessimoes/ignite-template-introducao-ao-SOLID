@@ -33,24 +33,20 @@ class UsersRepository implements IUsersRepository {
   }
 
   findById(id: string): User | undefined {
-    const user = this.users.find((c) => c.id === id);
-    return user;
+    return this.users.find((user) => user.id === id);   
   }
 
   findByEmail(email: string): User | undefined {
-    const user = this.users.find((c) => c.email === email);
-    return user;
+    return this.users.find((c) => c.email === email);    
   }
 
   turnAdmin(receivedUser: User): User {
-    const userAdmin = new User();
-    Object.assign(receivedUser, {
-      admin: true,
-      updated_at: new Date()
-    });
+    // eslint-disable-next-line no-param-reassign
+    receivedUser.admin = !receivedUser.admin;
+    // eslint-disable-next-line no-param-reassign
+    receivedUser.updated_at = new Date();
 
-    this.users.push(userAdmin);
-    return userAdmin
+    return receivedUser;
   }
 
   list(): User[] {
